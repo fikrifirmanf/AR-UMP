@@ -1,16 +1,30 @@
-<a-scene vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam;">
-  <a-image src="https://cors.kukkk.xyz/https://pngimg.com/uploads/mario/mario_PNG53.png" look-at="[gps-camera]"
-    rotation="0 180 0" gps-entity-place="latitude: -7.506110; longitude: 109.075774"></a-image>
-  <a-image src="https://cors.kukkk.xyz/https://pngimg.com/uploads/mario/mario_PNG53.png" look-at="[gps-camera]"
-    rotation="0 180 0" gps-entity-place="latitude: -7.506104; longitude: 109.075567"></a-image>
-  <a-image src="https://cors.kukkk.xyz/https://pngimg.com/uploads/mario/mario_PNG53.png" look-at="[gps-camera]"
-    rotation="0 180 0" gps-entity-place="latitude: -7.505893; longitude: 109.075522"></a-image>
-  <a-text value="Warunge alip." geometry="primitive:plane" look-at="[gps-camera]"
-    gps-entity-place="latitude: -7.505972; longitude: 109.075779;"></a-text>
-  <a-text value="Mbuh sapa." geometry="primitive:plane" look-at="[gps-camera]"
-    gps-entity-place="latitude: -7.506043; longitude: 109.075735;"></a-text>
+<a-scene vr-mode-ui="enabled: false" arjs="sourceType: webcam; debugUIEnabled: false;sourceWidth:1280; sourceHeight:720; displayWidth: 1280; displayHeight: 720;">
 
+  <a-camera gps-camera="positionMinAccuracy:10; gpsTimeInterval:0; gpsMinDistance:5" rotation-reader> </a-camera>
 
-  <a-camera gps-camera="alert:true;positionMinAccuracy:10;" rotation-reader> </a-camera>
 
 </a-scene>
+
+<div id="nav__dispaly">
+
+  <div class="row">
+    <div class="col">
+      <i (click)="openDialog()" class="fas fa-map-marked-alt fa-2x" style="color: #49d855;"></i>
+    </div>
+
+    <div class="col">
+      <i (click)="showApi()" class="fas fa-sync-alt fa-2x" style="color: #436fff;"></i>
+
+    </div>
+  </div>
+</div>
+<div id="info__dispaly">
+  <div class="col">
+    <i (click)="aboutDialog()" class="fas fa-info-circle fa-2x" style="color: #fffc43;"></i>
+
+  </div>
+
+</div>
+
+
+<!-- <h1>{{dataList[0].name}}</h1> -->

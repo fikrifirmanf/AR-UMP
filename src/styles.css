@@ -1,5 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
-body {
-    margin: 0;
-    overflow: hidden;
+* html,
+body { 
+    margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow: hidden;}
+#nav__dispaly {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    padding: 32px;
+    /* background: white; */
+}
+#info__dispaly {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    padding: 32px;
+    /* background: white; */
 }

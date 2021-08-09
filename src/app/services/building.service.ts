@@ -10,7 +10,7 @@ import { catchError, finalize, map } from 'rxjs/operators';
 export class BuildingService {
 
   constructor(private http:HttpClient) { }
-  private BASE_URL = "http://localhost:3000/api/v1/"
+  private BASE_URL = "https://apiarump.fikriff.xyz/api/v1/"
   getData():Observable<any>{
     return this.http.get(`${this.BASE_URL}building`).pipe(map((res)=>res),catchError((err)=>{
       console.log(err)
@@ -19,5 +19,14 @@ export class BuildingService {
       console.log(err)
       return of([])
     }),finalize(()=>null));
+  }
+  getIP():Observable<any>{
+    return this.http.get('https://api.ipify.org/?format=json').pipe(map((res)=>res),catchError((err)=>{
+      console.log(err)
+      return throwError(err)
+    }),finalize(()=>null),catchError((err)=>{
+      console.log(err)
+      return of([])
+    }),finalize(()=>null))
   }
 }
