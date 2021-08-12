@@ -1,7 +1,7 @@
 {
-  "name": "ARUMP",
-  "short_name": "ar-ump",
-  "theme_color": "#1976d2",
+  "name": "Augmented Reality UMP",
+  "short_name": "Augmented Reality UMP",
+  "theme_color": "#332C6E",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",

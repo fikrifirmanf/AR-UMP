@@ -4,6 +4,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import { Subject } from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
+import * as mapboxgl from 'mapbox-gl';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -76,9 +78,9 @@ export class AppComponent implements OnInit {
         placeText.setAttribute('gps-entity-place', `latitude: ${resp["data"][i]["lat"]}; longitude: ${resp["data"][i]["long"]};`);
         placeText.setAttribute('src', resp["data"][i]["imgurl"]);
         // placeText.setAttribute('geometry', 'primitive:plane');
-        // placeText.setAttribute('width', '7');
+        // placeText.setAttribute('width', '5');
         // placeText.setAttribute('height', '3.5');
-        placeText.setAttribute('scale', '1 1 1')
+        placeText.setAttribute('scale', '5 5 5')
         
         h1.innerText = `latitude: ${resp["data"][i]["lat"]}; longitude: ${resp["data"][i]["long"]};`
         
@@ -111,27 +113,43 @@ console.log(distanceMsg);
 })
 export class MapDialog implements OnInit {
   dataMap: any
+  map!: mapboxgl.Map;
+  style = 'mapbox://styles/mapbox/streets-v11';
 
-  constructor(private buildingServ: BuildingService){ }
+  zoom = 15
+  lat: number = -7.412207679837826;
+  lng: number = 109.27170037031276;
+  constructor(private buildingServ: BuildingService){ (mapboxgl as any).accessToken = environment.mapbox.accessToken;}
   
   ngOnInit(){
-    
-    navigator.geolocation.getCurrentPosition((position)=>{
-      // h2.innerText = `latku = ${position.coords.latitude.toString()} lonku = ${position.coords.longitude.toString()}`
-      var mapProp= {
-        center:new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
-        zoom:18,
-      };
-      var mapid = <HTMLElement>document.getElementById("googleMap")
-      var map = new google.maps.Map(mapid,mapProp);
-    })
+   
 
-    this.buildingServ.getData().subscribe((resp)=>{
-      console.log(resp)
-      this.dataMap = resp["data"]}, (err)=>{
-        console.log(err)
-      })
+    // this.buildingServ.getData().subscribe((resp)=>{
+    //   console.log(resp)
+    //   this.dataMap = resp["data"]}, (err)=>{
+    //     console.log(err)
+    //   })
+    this.buildMap()
       
+  }
+  buildMap() {
+    this.buildingServ.getData().subscribe((resp)=>{
+      for (let i = 0; i < resp["data"].length; i++) {
+        
+        const marker1 = new mapboxgl.Marker()
+  .setLngLat([resp["data"][i]['long'], resp["data"][i]['lat']]).setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+  .setHTML('<h4>' + resp["data"][i]['name'] + '</h4><p>' + resp["data"][i]['desc'] + '</p>'))
+  .addTo(this.map);
+      }
+    },(err)=>console.log(err))
+    this.map = new mapboxgl.Map({
+      container: 'map',
+      style: this.style,
+      zoom: this.zoom,
+      center: [this.lng, this.lat]
+    })
+   this.map.addControl(new mapboxgl.NavigationControl());
+   
   }
 }
 @Component({
@@ -145,10 +163,10 @@ export class AboutDialog implements OnInit {
   
   ngOnInit(){
     
-    this.buildingServ.getIP().subscribe((resp)=>{
-      this.myIP = resp.ip
-      console.log(resp.ip)
-    },(err)=>console.log(err))
+    // this.buildingServ.getIP().subscribe((resp)=>{
+    //   this.myIP = resp.ip
+    //   console.log(resp.ip)
+    // },(err)=>console.log(err))
     
   }
 }
